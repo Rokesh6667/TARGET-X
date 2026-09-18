@@ -101,31 +101,26 @@ class TestTARGETXComputerVision(unittest.TestCase):
 
     def test_goalkeeper_association(self):
         assoc = GoalkeeperAssociate()
-        # Track 1: Left Goal candidate (x = 80)
+        # Track 1: Spain Goalkeeper in goal net (x = 440, y = 390)
         t_gk1 = Track(1, {
-            "class_id": 0, "class_name": "player", "confidence": 0.9,
-            "box_pixels": [70, 330, 90, 390], "box_normalized": [0.05, 0.45, 0.07, 0.54],
-            "center_pixels": [80, 360]
-        })
-        # Track 2: Right Goal candidate (x = 1200)
-        t_gk2 = Track(2, {
-            "class_id": 0, "class_name": "player", "confidence": 0.9,
-            "box_pixels": [1190, 330, 1210, 390], "box_normalized": [0.93, 0.45, 0.95, 0.54],
-            "center_pixels": [1200, 360]
+            "class_id": 0, "class_name": "player", "confidence": 0.95,
+            "box_pixels": [426, 332, 484, 451], "box_normalized": [0.22, 0.31, 0.25, 0.42],
+            "center_pixels": [440, 390]
         })
         # Outfield player
-        t_out = Track(3, {
+        t_out = Track(2, {
             "class_id": 0, "class_name": "player", "confidence": 0.9,
-            "box_pixels": [300, 330, 320, 390], "box_normalized": [0.23, 0.45, 0.25, 0.54],
-            "center_pixels": [310, 360]
+            "box_pixels": [920, 579, 988, 716], "box_normalized": [0.48, 0.54, 0.51, 0.66],
+            "center_pixels": [954, 647]
         })
-        t_out.team = "Team 1"
+        t_out.team = "Portugal"
 
-        res = assoc.identify_and_associate([t_gk1, t_gk2, t_out], self.frame_shape, "#D32F2F", "#F5F5F5")
+        res = assoc.identify_and_associate([t_gk1, t_out], self.frame_shape, "#C01927", "#FFFFFF")
         self.assertEqual(t_gk1.role, "goalkeeper")
-        self.assertEqual(t_gk2.role, "goalkeeper")
-        self.assertIn("goalkeeper", res["team1"])
-        self.assertIn("goalkeeper", res["team2"])
+        self.assertEqual(t_out.role, "outfield")
+        self.assertEqual(res["team2"]["goalkeeper"], "Player #01")
+        self.assertEqual(res["team1"]["goalkeeper"], "Not in frame")
+
 
     def test_referee_isolation(self):
         ref_mgr = RefereeManager()
