@@ -1,0 +1,39 @@
+# TARGET-X Training Configuration
+# Complies with Hackathon Authenticity Constraints: Random initialization, local training.
+
+model:
+  name: "TargetX-Detector-V1"
+  architecture: "LightweightFootballFCOS"
+  backbone: "depthwise_mobilenet_custom"
+  num_classes: 3
+  classes:
+    0: "player"
+    1: "referee"
+    2: "ball"
+  input_size: [640, 384] # [width, height]
+  pretrained: false
+  weights: null
+
+training:
+  seed: 42
+  device: "auto" # mps, cuda, or cpu
+  epochs: 20
+  batch_size: 8
+  learning_rate: 0.001
+  weight_decay: 0.0005
+  optimizer: "AdamW"
+  lr_scheduler: "CosineAnnealingLR"
+  gradient_clip: 5.0
+  save_best_only: true
+  checkpoint_dir: "models"
+  results_dir: "training/results"
+
+data:
+  train_split: 0.8
+  val_split: 0.2
+  augmentations:
+    hsv_h: 0.015
+    hsv_s: 0.7
+    hsv_v: 0.4
+    horizontal_flip: 0.5
+    scale: [0.8, 1.2]

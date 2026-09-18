@@ -1,0 +1,14 @@
+# TARGET-X Dataset Specification
+# Problem Statement: AI-Powered Football Player and Ball Tracking
+# Classes: 0 -> Player, 1 -> Referee, 2 -> Ball
+
+path: "data/training"
+train: "images/train"
+val: "images/val"
+
+names:
+  0: player
+  1: referee
+  2: ball
+
+nc: 3

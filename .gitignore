@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+*.pt
+!models/README.md
+!models/targetx_detector.pt
+
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Uploads & temporary runs
+uploads/*
+!uploads/.gitkeep
+data/demo/*.mp4
+!data/demo/.gitkeep
+data/matches/match_*.json
+test_*.jpg
+*.mov
+*.mp4
+*.MOV
+
+# OS
+.DS_Store
+Thumbs.db
+
